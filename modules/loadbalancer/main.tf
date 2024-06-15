@@ -74,7 +74,7 @@ resource "aws_lb_listener" "app_listener" {
 }
 
 
-
+/*
 # Scaling Policies
 resource "aws_autoscaling_policy" "scale_up" {
   name                   = "scale-up"
@@ -125,4 +125,4 @@ resource "aws_cloudwatch_metric_alarm" "low_cpu" {
   }
 
   alarm_actions = [aws_autoscaling_policy.scale_down.arn]
-}
+}*/
