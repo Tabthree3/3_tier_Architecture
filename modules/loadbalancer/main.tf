@@ -81,7 +81,7 @@ resource "aws_autoscaling_policy" "scale_up" {
   scaling_adjustment     = 1
   adjustment_type        = "ChangeInCapacity"
   cooldown               = 300
-  autoscaling_group_name = aws_autoscaling_group.app_tier_instance.name
+  autoscaling_group_name = aws_autoscaling_group.app_asg.name
 }
 
 resource "aws_autoscaling_policy" "scale_down" {
@@ -89,7 +89,7 @@ resource "aws_autoscaling_policy" "scale_down" {
   scaling_adjustment     = -1
   adjustment_type        = "ChangeInCapacity"
   cooldown               = 300
-  autoscaling_group_name = aws_autoscaling_group.app_tier_instance.name
+  autoscaling_group_name = aws_autoscaling_group.app_asg.name
 }
 
 # CloudWatch Alarms
@@ -104,7 +104,7 @@ resource "aws_cloudwatch_metric_alarm" "high_cpu" {
   threshold                 = 80
   alarm_description         = "This metric monitors high CPU usage"
   dimensions = {
-    AutoScalingGroupName = aws_autoscaling_group.app_tier_instance.name
+    AutoScalingGroupName = aws_autoscaling_group.app_asg.name
   }
 
   alarm_actions = [aws_autoscaling_policy.scale_up.arn]
@@ -121,7 +121,7 @@ resource "aws_cloudwatch_metric_alarm" "low_cpu" {
   threshold                 = 20
   alarm_description         = "This metric monitors low CPU usage"
   dimensions = {
-    AutoScalingGroupName = aws_autoscaling_group.app_tier_instance.name
+    AutoScalingGroupName = aws_autoscaling_group.app_asg.name
   }
 
   alarm_actions = [aws_autoscaling_policy.scale_down.arn]
